@@ -2,6 +2,18 @@ import { VideoBlock as VideoBlockType } from '@/lib/types'
 import Container from '../ui/Container'
 
 export default function VideoBlock({ block }: { block: VideoBlockType }) {
+  const sizeClasses = {
+    xs: 'max-w-[200px]',
+    sm: 'max-w-[300px]',
+    md: 'max-w-[500px]',
+    lg: 'max-w-[700px]',
+    xl: 'max-w-[900px]',
+    full: 'w-full',
+  }
+
+  const size = block.size || 'md'
+  const sizeClass = sizeClasses[size]
+
   const getYouTubeEmbedUrl = (url: string) => {
     const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/
     const match = url.match(regExp)
@@ -31,14 +43,16 @@ export default function VideoBlock({ block }: { block: VideoBlockType }) {
     if (embedUrl) {
       return (
         <Container className="py-8 bg-white">
-          <div className="relative w-full aspect-video rounded-lg overflow-hidden">
-            <iframe
-              src={embedUrl}
-              className="absolute top-0 left-0 w-full h-full"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-              title={block.caption || 'Video'}
-            />
+          <div className="flex justify-center">
+            <div className={`relative w-full ${sizeClass} aspect-video rounded-lg overflow-hidden`}>
+              <iframe
+                src={embedUrl}
+                className="absolute top-0 left-0 w-full h-full"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                title={block.caption || 'Video'}
+              />
+            </div>
           </div>
           {block.caption && (
             <p className="mt-2 text-sm text-gray-600 text-center italic">

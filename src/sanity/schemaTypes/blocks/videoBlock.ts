@@ -21,6 +21,23 @@ export default defineType({
       description: 'Upload a video file (alternative to URL)',
     }),
     defineField({
+      name: 'size',
+      title: 'Video Size',
+      type: 'string',
+      options: {
+        list: [
+          { title: 'Extra Small (200px)', value: 'xs' },
+          { title: 'Small (300px)', value: 'sm' },
+          { title: 'Medium (500px)', value: 'md' },
+          { title: 'Large (700px)', value: 'lg' },
+          { title: 'Extra Large (900px)', value: 'xl' },
+          { title: 'Full Width', value: 'full' },
+        ],
+      },
+      initialValue: 'md',
+      description: 'Choose the maximum width of the video',
+    }),
+    defineField({
       name: 'caption',
       title: 'Caption',
       type: 'string',

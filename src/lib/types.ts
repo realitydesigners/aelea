@@ -47,6 +47,8 @@ export interface TextBlock {
   content: PortableTextBlock[]
   alignment?: 'left' | 'center' | 'right'
   fontFamily?: 'didot' | 'brandon' | 'assistant' | 'system'
+  spacing?: 'full' | 'container' | 'small' | 'medium' | 'large' | 'xl' | '2xl' | '3xl' | 'custom'
+  customPadding?: number
 }
 
 export interface ImageTextBlock {
@@ -86,6 +88,7 @@ export interface VideoBlock {
   }
   caption?: string
   autoplay?: boolean
+  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'full'
 }
 
 export interface SpacerBlock {
