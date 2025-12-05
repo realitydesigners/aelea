@@ -1,4 +1,5 @@
 import page from './page'
+import navigation from './navigation'
 import imageBlock from './blocks/imageBlock'
 import textBlock from './blocks/textBlock'
 import imageTextBlock from './blocks/imageTextBlock'
@@ -8,9 +9,11 @@ import videoBlock from './blocks/videoBlock'
 import spacerBlock from './blocks/spacerBlock'
 import imageSliderBlock from './blocks/imageSliderBlock'
 import buttonBlock from './blocks/buttonBlock'
+import socialLinksBlock from './blocks/socialLinksBlock'
 
 export const schemaTypes = [
   page,
+  navigation,
   imageBlock,
   textBlock,
   imageTextBlock,
@@ -20,5 +23,6 @@ export const schemaTypes = [
   spacerBlock,
   imageSliderBlock,
   buttonBlock,
+  socialLinksBlock,
 ]
 

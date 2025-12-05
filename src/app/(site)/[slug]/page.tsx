@@ -6,7 +6,7 @@ import { Page } from '@/lib/types'
 import BlockRenderer from '@/components/sections'
 
 interface PageProps {
-  params: { slug: string }
+  params: Promise<{ slug: string }>
 }
 
 export const revalidate = 60
@@ -21,7 +21,7 @@ async function getPage(slug: string): Promise<Page | null> {
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const { slug } = params
+  const { slug } = await params
   const page = await getPage(slug)
 
   if (!page) {
@@ -46,7 +46,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 export default async function DynamicPage({ params }: PageProps) {
-  const { slug } = params
+  const { slug } = await params
   const page = await getPage(slug)
 
   if (!page) notFound()

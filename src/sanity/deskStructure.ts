@@ -11,6 +11,13 @@ export const deskStructure = (S: StructureBuilder) => {
             .title('Pages')
             .defaultOrdering([{ field: 'title', direction: 'asc' }])
         ),
+      S.listItem()
+        .title('Navigation')
+        .child(
+          S.documentTypeList('navigation')
+            .title('Navigation')
+            .defaultOrdering([{ field: 'order', direction: 'asc' }])
+        ),
       S.divider(),
       S.listItem()
         .title('Settings')

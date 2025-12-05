@@ -47,6 +47,7 @@ export default function TextBlock({ block }: { block: TextBlockType }) {
               bullet: ({ children }) => <li className="ml-4">{children}</li>,
               number: ({ children }) => <li className="ml-4">{children}</li>,
             },
+            hardBreak: () => <br />,
           }}
         />
       </div>

@@ -8,6 +8,7 @@ import VideoBlock from './VideoBlock'
 import SpacerBlock from './SpacerBlock'
 import ImageSliderBlock from './ImageSliderBlock'
 import ButtonBlock from './ButtonBlock'
+import SocialLinksBlock from './SocialLinksBlock'
 
 interface BlockRendererProps {
   block: ContentBlock
@@ -33,6 +34,8 @@ export default function BlockRenderer({ block }: BlockRendererProps) {
       return <ImageSliderBlock block={block} />
     case 'buttonBlock':
       return <ButtonBlock block={block} />
+    case 'socialLinksBlock':
+      return <SocialLinksBlock block={block} />
     default:
       return null
   }

@@ -73,6 +73,65 @@ export default defineType({
       },
       initialValue: 'center',
     }),
+    defineField({
+      name: 'overlayText',
+      title: 'Text Overlay',
+      type: 'array',
+      of: [{ type: 'block' }],
+      description: 'Optional text to display on top of the image',
+    }),
+    defineField({
+      name: 'overlayPosition',
+      title: 'Text Overlay Position',
+      type: 'string',
+      options: {
+        list: [
+          { title: 'Top Left', value: 'top-left' },
+          { title: 'Top Center', value: 'top-center' },
+          { title: 'Top Right', value: 'top-right' },
+          { title: 'Center Left', value: 'center-left' },
+          { title: 'Center', value: 'center' },
+          { title: 'Center Right', value: 'center-right' },
+          { title: 'Bottom Left', value: 'bottom-left' },
+          { title: 'Bottom Center', value: 'bottom-center' },
+          { title: 'Bottom Right', value: 'bottom-right' },
+        ],
+      },
+      initialValue: 'center',
+      description: 'Position of the text overlay on the image',
+      hidden: ({ parent }) => !parent?.overlayText || parent.overlayText.length === 0,
+    }),
+    defineField({
+      name: 'overlayTextColor',
+      title: 'Text Color',
+      type: 'string',
+      options: {
+        list: [
+          { title: 'White', value: 'white' },
+          { title: 'Black', value: 'black' },
+          { title: 'Light Gray', value: 'gray-300' },
+          { title: 'Dark Gray', value: 'gray-700' },
+        ],
+      },
+      initialValue: 'white',
+      description: 'Color of the overlay text',
+      hidden: ({ parent }) => !parent?.overlayText || parent.overlayText.length === 0,
+    }),
+    defineField({
+      name: 'overlayBackground',
+      title: 'Background Overlay',
+      type: 'string',
+      options: {
+        list: [
+          { title: 'None', value: 'none' },
+          { title: 'Dark (Semi-transparent)', value: 'dark' },
+          { title: 'Light (Semi-transparent)', value: 'light' },
+        ],
+      },
+      initialValue: 'none',
+      description: 'Optional background behind the text for better readability',
+      hidden: ({ parent }) => !parent?.overlayText || parent.overlayText.length === 0,
+    }),
   ],
   preview: {
     select: {

@@ -35,6 +35,7 @@ export default defineType({
         { type: 'spacerBlock' },
         { type: 'imageSliderBlock' },
         { type: 'buttonBlock' },
+        { type: 'socialLinksBlock' },
       ],
     }),
     defineField({

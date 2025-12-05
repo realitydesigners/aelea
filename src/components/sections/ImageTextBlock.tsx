@@ -68,6 +68,7 @@ export default function ImageTextBlock({ block }: { block: ImageTextBlockType })
                   bullet: ({ children }) => <li className="ml-4">{children}</li>,
                   number: ({ children }) => <li className="ml-4">{children}</li>,
                 },
+                hardBreak: () => <br />,
               }}
             />
           </div>

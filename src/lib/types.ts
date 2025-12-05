@@ -35,6 +35,10 @@ export interface ImageBlock {
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'full'
   borderRadius?: 'none' | 'sm' | 'md' | 'lg' | 'full'
   alignment?: 'left' | 'center' | 'right'
+  overlayText?: PortableTextBlock[]
+  overlayPosition?: 'top-left' | 'top-center' | 'top-right' | 'center-left' | 'center' | 'center-right' | 'bottom-left' | 'bottom-center' | 'bottom-right'
+  overlayTextColor?: 'white' | 'black' | 'gray-300' | 'gray-700'
+  overlayBackground?: 'none' | 'dark' | 'light'
 }
 
 export interface TextBlock {
@@ -110,6 +114,18 @@ export interface ButtonBlock {
   openInNewTab?: boolean
 }
 
+export interface SocialLinksBlock {
+  _type: 'socialLinksBlock'
+  _key: string
+  instagram?: string
+  soundcloud?: string
+  facebook?: string
+  youtube?: string
+  email?: string
+  alignment?: 'left' | 'center' | 'right'
+  size?: 'sm' | 'md' | 'lg'
+}
+
 export type ContentBlock =
   | ImageBlock
   | TextBlock
@@ -120,4 +136,34 @@ export type ContentBlock =
   | SpacerBlock
   | ImageSliderBlock
   | ButtonBlock
+  | SocialLinksBlock
+
+// Navigation Types
+export interface NavigationChild {
+  label: string
+  page: {
+    _id: string
+    title: string
+    slug: {
+      current: string
+    }
+  }
+}
+
+export interface NavigationItem {
+  _id: string
+  title: string
+  label: string
+  linkType: 'page' | 'external' | 'none'
+  page?: {
+    _id: string
+    title: string
+    slug: {
+      current: string
+    }
+  }
+  externalUrl?: string
+  children?: NavigationChild[]
+  order?: number
+}
 
