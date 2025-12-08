@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { NavigationItem } from '@/lib/types'
 
 interface HeaderProps {
@@ -12,6 +12,21 @@ interface HeaderProps {
 export default function Header({ navigation }: HeaderProps) {
   const pathname = usePathname()
   const [openDropdown, setOpenDropdown] = useState<string | null>(null)
+  const closeTimer = useRef<NodeJS.Timeout | null>(null)
+
+  const clearCloseTimer = () => {
+    if (closeTimer.current) {
+      clearTimeout(closeTimer.current)
+      closeTimer.current = null
+    }
+  }
+
+  const scheduleClose = () => {
+    clearCloseTimer()
+    closeTimer.current = setTimeout(() => {
+      setOpenDropdown(null)
+    }, 200)
+  }
 
   const getHref = (item: NavigationItem): string => {
     if (item.linkType === 'external' && item.externalUrl) {
@@ -56,11 +71,12 @@ export default function Header({ navigation }: HeaderProps) {
                     className="relative group"
                     onMouseEnter={() => {
                       if (itemHasChildren) {
+                        clearCloseTimer()
                         setOpenDropdown(item._id)
                       }
                     }}
                     onMouseLeave={() => {
-                      setOpenDropdown(null)
+                      scheduleClose()
                     }}
                   >
                     <Link
@@ -82,10 +98,11 @@ export default function Header({ navigation }: HeaderProps) {
                           zIndex: 9999,
                         }}
                         onMouseEnter={() => {
+                          clearCloseTimer()
                           setOpenDropdown(item._id)
                         }}
                         onMouseLeave={() => {
-                          setOpenDropdown(null)
+                          scheduleClose()
                         }}
                       >
                         {item.children && item.children.length > 0 ? (
