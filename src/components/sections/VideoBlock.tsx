@@ -64,14 +64,30 @@ export default function VideoBlock({ block }: { block: VideoBlockType }) {
     }
   }
 
-  if (block.videoFile) {
-    // For uploaded video files, you would need to get the URL from Sanity
-    // This is a placeholder - you'll need to implement file URL retrieval
+  if (block.videoFile?.asset?.url) {
+    const videoUrl = block.videoFile.asset.url
     return (
       <Container className="py-8 bg-white">
-        <div className="text-center text-gray-500">
-          Video file support coming soon
+        <div className="flex justify-center">
+          <div className={`relative w-full ${sizeClass} aspect-video rounded-lg overflow-hidden`}>
+            <video
+              src={videoUrl}
+              controls
+              className="w-full h-full object-cover"
+              autoPlay={block.autoplay || false}
+              loop
+              muted={block.autoplay || false}
+              playsInline
+            >
+              Your browser does not support the video tag.
+            </video>
+          </div>
         </div>
+        {block.caption && (
+          <p className="mt-2 text-sm text-gray-600 text-center italic">
+            {block.caption}
+          </p>
+        )}
       </Container>
     )
   }

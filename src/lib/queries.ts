@@ -14,11 +14,18 @@ export const pageQuery = groq`
       _type,
       _key,
       ...,
+      linkedPost->{
+        slug
+      },
       image {
         ...,
         asset->
       },
       images[] {
+        ...,
+        asset->
+      },
+      videoFile {
         ...,
         asset->
       },
@@ -57,11 +64,71 @@ export const navigationQuery = groq`
     },
     externalUrl,
     children[] {
+      linkType,
       label,
+      externalUrl,
       page-> {
         _id,
         title,
         slug
+      }
+    }
+  }
+`;
+
+export const postsQuery = groq`
+  *[_type == "post"] | order(publishedAt desc) {
+    _id,
+    title,
+    slug,
+    publishedAt,
+    excerpt,
+    categories,
+    coverImage {
+      ...,
+      asset->
+    }
+  }
+`;
+
+export const postBySlugQuery = groq`
+  *[_type == "post" && slug.current == $slug][0] {
+    _id,
+    title,
+    slug,
+    publishedAt,
+    excerpt,
+    categories,
+    coverImage {
+      ...,
+      asset->
+    },
+    body,
+    contentBlocks[] {
+      _type,
+      _key,
+      ...,
+      image {
+        ...,
+        asset->
+      },
+      images[] {
+        ...,
+        asset->
+      },
+      videoFile {
+        ...,
+        asset->
+      },
+      overlayText[] {
+        ...,
+        markDefs[] {
+          ...,
+          _type == "link" => {
+            ...,
+            href
+          }
+        }
       }
     }
   }

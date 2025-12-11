@@ -79,15 +79,29 @@ export default function Header({ navigation }: HeaderProps) {
                       scheduleClose()
                     }}
                   >
-                    <Link
-                      href={getHref(item)}
-                      className={`text-xl font-medium transition-colors duration-200 whitespace-nowrap inline-block ${itemIsActive
-                          ? 'text-teal-500'
-                          : 'text-black hover:text-teal-600'
-                        }`}
-                    >
-                      {item.label}
-                    </Link>
+                    {item.linkType === 'external' ? (
+                      <a
+                        href={getHref(item)}
+                        target="_blank"
+                        rel="noreferrer"
+                        className={`text-xl font-medium transition-colors duration-200 whitespace-nowrap inline-block ${itemIsActive
+                            ? 'text-teal-500'
+                            : 'text-black hover:text-teal-600'
+                          }`}
+                      >
+                        {item.label}
+                      </a>
+                    ) : (
+                      <Link
+                        href={getHref(item)}
+                        className={`text-xl font-medium transition-colors duration-200 whitespace-nowrap inline-block ${itemIsActive
+                            ? 'text-teal-500'
+                            : 'text-black hover:text-teal-600'
+                          }`}
+                      >
+                        {item.label}
+                      </Link>
+                    )}
 
                     {/* Dropdown Menu - Remove the gap and fix styling */}
                     {itemHasChildren && isDropdownOpen && (
@@ -108,21 +122,47 @@ export default function Header({ navigation }: HeaderProps) {
                         {item.children && item.children.length > 0 ? (
                           item.children.map((child, index) => {
                             const childSlug = child.page?.slug?.current
-                            const childHref = childSlug === 'home' ? '/' : `/${childSlug}`
-                            const childIsActive = pathname === childHref
+                            const childHref =
+                              child?.linkType === 'external' && child.externalUrl
+                                ? child.externalUrl
+                                : childSlug === 'home'
+                                  ? '/'
+                                  : childSlug
+                                    ? `/${childSlug}`
+                                    : '#'
+                            const childIsActive =
+                              child?.linkType === 'page' && childSlug
+                                ? pathname === (childSlug === 'home' ? '/' : `/${childSlug}`)
+                                : false
 
                             return (
-                              <Link
-                                key={`${item._id}-child-${index}`}
-                                href={childHref}
-                                className={`block px-4 py-2 text-base transition-colors duration-200 ${childIsActive
-                                    ? 'text-teal-500 bg-teal-50'
-                                    : 'text-gray-700 hover:text-teal-600 hover:bg-gray-50'
-                                  }`}
-                                onClick={() => setOpenDropdown(null)}
-                              >
-                                {child.label}
-                              </Link>
+                              child?.linkType === 'external' ? (
+                                <a
+                                  key={`${item._id}-child-${index}`}
+                                  href={childHref}
+                                  target="_blank"
+                                  rel="noreferrer"
+                                  className={`block px-4 py-2 text-base transition-colors duration-200 ${childIsActive
+                                      ? 'text-teal-500 bg-teal-50'
+                                      : 'text-gray-700 hover:text-teal-600 hover:bg-gray-50'
+                                    }`}
+                                  onClick={() => setOpenDropdown(null)}
+                                >
+                                  {child.label}
+                                </a>
+                              ) : (
+                                <Link
+                                  key={`${item._id}-child-${index}`}
+                                  href={childHref}
+                                  className={`block px-4 py-2 text-base transition-colors duration-200 ${childIsActive
+                                      ? 'text-teal-500 bg-teal-50'
+                                      : 'text-gray-700 hover:text-teal-600 hover:bg-gray-50'
+                                    }`}
+                                  onClick={() => setOpenDropdown(null)}
+                                >
+                                  {child.label}
+                                </Link>
+                              )
                             )
                           })
                         ) : (

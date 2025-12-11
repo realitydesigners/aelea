@@ -58,6 +58,12 @@ export interface ImageTextBlock {
   text: PortableTextBlock[]
   layout?: 'imageLeft' | 'imageRight' | 'imageTop' | 'imageBottom'
   fontFamily?: 'didot' | 'brandon' | 'assistant' | 'system'
+  linkedPost?: {
+    _ref: string
+    _type: 'reference'
+    slug?: { current: string }
+  }
+  openInNewTab?: boolean
 }
 
 export interface HeadingBlock {
@@ -76,6 +82,14 @@ export interface ImageGalleryBlock {
   gap?: 'small' | 'medium' | 'large'
 }
 
+export interface CollageBlock {
+  _type: 'collageBlock'
+  _key: string
+  images: SanityImage[]
+  columns?: 2 | 3 | 4
+  gap?: 'tight' | 'comfy' | 'roomy'
+}
+
 export interface VideoBlock {
   _type: 'videoBlock'
   _key: string
@@ -84,6 +98,9 @@ export interface VideoBlock {
     asset: {
       _ref: string
       _type: 'reference'
+      url?: string
+      originalFilename?: string
+      mimeType?: string
     }
   }
   caption?: string
@@ -129,28 +146,58 @@ export interface SocialLinksBlock {
   size?: 'sm' | 'md' | 'lg'
 }
 
+export interface ContactFormBlock {
+  _type: 'contactFormBlock'
+  _key: string
+  title?: string
+  description?: string
+  formspreeEndpoint?: string
+  buttonLabel?: string
+  includeMailingListCheckbox?: boolean
+  successMessage?: string
+  errorMessage?: string
+}
+
+export interface Post {
+  _id: string
+  title: string
+  slug: {
+    current: string
+  }
+  publishedAt?: string
+  excerpt?: string
+  categories?: string[]
+  coverImage?: SanityImage
+  body?: PortableTextBlock[]
+  contentBlocks?: ContentBlock[]
+}
+
 export type ContentBlock =
   | ImageBlock
   | TextBlock
   | ImageTextBlock
   | HeadingBlock
   | ImageGalleryBlock
+  | CollageBlock
   | VideoBlock
   | SpacerBlock
   | ImageSliderBlock
   | ButtonBlock
   | SocialLinksBlock
+  | ContactFormBlock
 
 // Navigation Types
 export interface NavigationChild {
   label: string
-  page: {
+  linkType: 'page' | 'external'
+  page?: {
     _id: string
     title: string
     slug: {
       current: string
     }
   }
+  externalUrl?: string
 }
 
 export interface NavigationItem {

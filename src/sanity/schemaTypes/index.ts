@@ -10,10 +10,14 @@ import spacerBlock from './blocks/spacerBlock'
 import imageSliderBlock from './blocks/imageSliderBlock'
 import buttonBlock from './blocks/buttonBlock'
 import socialLinksBlock from './blocks/socialLinksBlock'
+import collageBlock from './blocks/collageBlock'
+import contactFormBlock from './blocks/contactFormBlock'
+import post from './post'
 
 export const schemaTypes = [
   page,
   navigation,
+  post,
   imageBlock,
   textBlock,
   imageTextBlock,
@@ -24,5 +28,7 @@ export const schemaTypes = [
   imageSliderBlock,
   buttonBlock,
   socialLinksBlock,
+  collageBlock,
+  contactFormBlock,
 ]
 

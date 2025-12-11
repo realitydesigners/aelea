@@ -31,11 +31,13 @@ export default defineType({
         { type: 'imageTextBlock' },
         { type: 'headingBlock' },
         { type: 'imageGalleryBlock' },
+        { type: 'collageBlock' },
         { type: 'videoBlock' },
         { type: 'spacerBlock' },
         { type: 'imageSliderBlock' },
         { type: 'buttonBlock' },
         { type: 'socialLinksBlock' },
+        { type: 'contactFormBlock' },
       ],
     }),
     defineField({

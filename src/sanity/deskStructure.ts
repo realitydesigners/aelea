@@ -12,6 +12,13 @@ export const deskStructure = (S: StructureBuilder) => {
             .defaultOrdering([{ field: 'title', direction: 'asc' }])
         ),
       S.listItem()
+        .title('Posts')
+        .child(
+          S.documentTypeList('post')
+            .title('Posts')
+            .defaultOrdering([{ field: 'publishedAt', direction: 'desc' }])
+        ),
+      S.listItem()
         .title('Navigation')
         .child(
           S.documentTypeList('navigation')

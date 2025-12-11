@@ -44,6 +44,20 @@ export default defineType({
       initialValue: 'imageLeft',
     }),
     defineField({
+      name: 'linkedPost',
+      title: 'Linked Post (optional)',
+      type: 'reference',
+      to: [{ type: 'post' }],
+      description: 'Pick a post to open when the image/text is clicked',
+    }),
+    defineField({
+      name: 'openInNewTab',
+      title: 'Open in new tab',
+      type: 'boolean',
+      initialValue: true,
+      hidden: ({ parent }) => !parent?.linkedPost,
+    }),
+    defineField({
       name: 'fontFamily',
       title: 'Font Family',
       type: 'string',

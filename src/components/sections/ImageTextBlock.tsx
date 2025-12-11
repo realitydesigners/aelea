@@ -5,10 +5,13 @@ import Image from 'next/image'
 import Container from '../ui/Container'
 
 export default function ImageTextBlock({ block }: { block: ImageTextBlockType }) {
-  const imageUrl = block.image?.asset ? urlFor(block.image).width(800).url() : null
+  const imageUrl = block.image?.asset ? urlFor(block.image).width(500).height(375).url() : null
   const alt = block.image?.alt || ''
   const layout = block.layout || 'imageLeft'
   const fontFamily = block.fontFamily || 'didot'
+  const postSlug = block.linkedPost as unknown as { slug?: { current?: string } }
+  const linkedHref = postSlug?.slug?.current ? `/blog/${postSlug.slug.current}` : null
+  const openInNewTab = block.openInNewTab !== false
 
   if (!imageUrl) return null
 
@@ -32,21 +35,21 @@ export default function ImageTextBlock({ block }: { block: ImageTextBlockType })
   return (
     <Container className="py-8 bg-white">
       <div className={containerClass}>
-        <div className={`${imageOrder} ${isHorizontal ? 'w-full md:w-1/2' : 'w-full'}`}>
+        <MaybeLink href={linkedHref} newTab={openInNewTab} className={`${imageOrder} ${isHorizontal ? 'w-full md:w-1/2' : 'w-full'} max-w-md`}>
           <Image
             src={imageUrl}
             alt={alt}
-            width={800}
-            height={600}
+            width={500}
+            height={375}
             className="w-full h-auto rounded-lg object-cover"
           />
-        </div>
-        <div className={`${textOrder} ${isHorizontal ? 'w-full md:w-1/2' : 'w-full'}`}>
-          <div 
+        </MaybeLink>
+        <MaybeLink href={linkedHref} newTab={openInNewTab} className={`${textOrder} ${isHorizontal ? 'w-full md:w-1/2' : 'w-full'} max-w-xl`}>
+          <div
             className="text-base md:text-lg leading-relaxed text-gray-700 max-w-none"
             style={{ fontFamily: fontFamilyMap[fontFamily] }}
           >
-            <PortableText 
+            <PortableText
               value={block.text}
               components={{
                 block: {
@@ -72,9 +75,35 @@ export default function ImageTextBlock({ block }: { block: ImageTextBlockType })
               }}
             />
           </div>
-        </div>
+        </MaybeLink>
       </div>
     </Container>
   )
+}
+
+function MaybeLink({
+  href,
+  newTab,
+  className,
+  children,
+}: {
+  href: string | null
+  newTab: boolean
+  className?: string
+  children: React.ReactNode
+}) {
+  if (href) {
+    return (
+      <a
+        href={href}
+        target={newTab ? '_blank' : undefined}
+        rel={newTab ? 'noreferrer' : undefined}
+        className={className}
+      >
+        {children}
+      </a>
+    )
+  }
+  return <div className={className}>{children}</div>
 }
 

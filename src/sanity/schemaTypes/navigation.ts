@@ -57,6 +57,18 @@ export default defineType({
           type: 'object',
           fields: [
             defineField({
+              name: 'linkType',
+              title: 'Link Type',
+              type: 'string',
+              options: {
+                list: [
+                  { title: 'Page', value: 'page' },
+                  { title: 'External URL', value: 'external' },
+                ],
+              },
+              initialValue: 'page',
+            }),
+            defineField({
               name: 'label',
               title: 'Label',
               type: 'string',
@@ -67,19 +79,49 @@ export default defineType({
               title: 'Page',
               type: 'reference',
               to: [{ type: 'page' }],
-              validation: (Rule) => Rule.required(),
               description: 'Select the page this sub-item links to',
+              hidden: ({ parent }) => parent?.linkType !== 'page',
+              validation: (Rule) =>
+                Rule.custom((value, context) => {
+                  const linkType = (context?.parent as { linkType?: string } | undefined)?.linkType
+                  if (linkType === 'page' && !value) {
+                    return 'Page is required when link type is Page'
+                  }
+                  return true
+                }),
+            }),
+            defineField({
+              name: 'externalUrl',
+              title: 'External URL',
+              type: 'url',
+              description: 'External URL to link to',
+              hidden: ({ parent }) => parent?.linkType !== 'external',
+              validation: (Rule) =>
+                Rule.uri({ allowRelative: false }).custom((value, context) => {
+                  const linkType = (context?.parent as { linkType?: string } | undefined)?.linkType
+                  if (linkType === 'external' && !value) {
+                    return 'External URL is required when link type is External'
+                  }
+                  return true
+                }),
             }),
           ],
           preview: {
             select: {
+              linkType: 'linkType',
               title: 'label',
               pageTitle: 'page.title',
+              externalUrl: 'externalUrl',
             },
-            prepare({ title, pageTitle }) {
+            prepare({ title, linkType, pageTitle, externalUrl }) {
               return {
                 title: title || 'Untitled',
-                subtitle: pageTitle ? `→ ${pageTitle}` : 'No page selected',
+                subtitle:
+                  linkType === 'external'
+                    ? externalUrl || 'External link'
+                    : pageTitle
+                    ? `→ ${pageTitle}`
+                    : 'No page selected',
               }
             },
           },

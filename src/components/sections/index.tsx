@@ -4,11 +4,13 @@ import TextBlock from './TextBlock'
 import ImageTextBlock from './ImageTextBlock'
 import HeadingBlock from './HeadingBlock'
 import ImageGalleryBlock from './ImageGalleryBlock'
+import CollageBlock from './CollageBlock'
 import VideoBlock from './VideoBlock'
 import SpacerBlock from './SpacerBlock'
 import ImageSliderBlock from './ImageSliderBlock'
 import ButtonBlock from './ButtonBlock'
 import SocialLinksBlock from './SocialLinksBlock'
+import ContactFormBlock from './ContactFormBlock'
 
 interface BlockRendererProps {
   block: ContentBlock
@@ -26,6 +28,8 @@ export default function BlockRenderer({ block }: BlockRendererProps) {
       return <HeadingBlock block={block} />
     case 'imageGalleryBlock':
       return <ImageGalleryBlock block={block} />
+    case 'collageBlock':
+      return <CollageBlock block={block} />
     case 'videoBlock':
       return <VideoBlock block={block} />
     case 'spacerBlock':
@@ -36,6 +40,8 @@ export default function BlockRenderer({ block }: BlockRendererProps) {
       return <ButtonBlock block={block} />
     case 'socialLinksBlock':
       return <SocialLinksBlock block={block} />
+    case 'contactFormBlock':
+      return <ContactFormBlock block={block} />
     default:
       return null
   }
