@@ -40,6 +40,14 @@ export default defineType({
       to: [{ type: 'page' }],
       description: 'Select a page to link to',
       hidden: ({ parent }) => parent?.linkType !== 'page',
+      validation: (Rule) =>
+        Rule.custom((value, context) => {
+          const linkType = (context?.parent as { linkType?: string } | undefined)?.linkType
+          if (linkType === 'page' && !value) {
+            return 'Page is required when link type is Page'
+          }
+          return true
+        }),
     }),
     defineField({
       name: 'externalUrl',
@@ -47,6 +55,14 @@ export default defineType({
       type: 'url',
       description: 'External URL to link to',
       hidden: ({ parent }) => parent?.linkType !== 'external',
+      validation: (Rule) =>
+        Rule.uri({ allowRelative: false }).custom((value, context) => {
+          const linkType = (context?.parent as { linkType?: string } | undefined)?.linkType
+          if (linkType === 'external' && !value) {
+            return 'External URL is required when link type is External'
+          }
+          return true
+        }),
     }),
     defineField({
       name: 'children',
