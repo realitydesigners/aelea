@@ -1,10 +1,17 @@
 'use client'
 
-import { NextStudio } from 'next-sanity/studio'
 import { defineConfig } from 'sanity'
 import { structureTool } from 'sanity/structure'
 import { deskStructure } from '@/sanity/deskStructure'
 import { schemaTypes } from '@/sanity/schemaTypes'
+import dynamic from 'next/dynamic'
+
+const NextStudio = dynamic(
+  () => import('next-sanity/studio').then((mod) => mod.NextStudio),
+  {
+    ssr: false,
+  }
+)
 
 const config = defineConfig({
   name: 'default',
