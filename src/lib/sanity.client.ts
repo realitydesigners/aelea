@@ -5,7 +5,7 @@ import {
 } from "@sanity/image-url";
 
 export const client = createClient({
-  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || "cr2uws4b",
+  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || "7c1e7lpn",
   dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || "production",
   useCdn: process.env.NODE_ENV === "production",
   apiVersion: "2024-12-03",
