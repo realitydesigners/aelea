@@ -9,7 +9,7 @@ export const dynamic = 'force-dynamic' // Always server-render to avoid build-ti
 
 async function getHomePage(): Promise<Page | null> {
   try {
-    // Fetch page with slug "home"
+
     const page = await client.fetch<Page>(pageQuery, { slug: 'home' })
 
     if (!page) {
