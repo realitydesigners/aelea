@@ -14,7 +14,7 @@
     "@sanity/image-url": "^2.0.2",
     "dotenv": "^17.2.3",
     "groq": "^4.22.0",
-    "next": "16.0.6",
+    "next": "16.0.10",
     "next-sanity": "^11.6.12",
     "react": "19.2.1",
     "react-dom": "19.2.1",
@@ -26,7 +26,7 @@
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
     "eslint": "^9.39.2",
-    "eslint-config-next": "16.0.7",
+    "eslint-config-next": "16.0.10",
     "tailwindcss": "^4.1.18",
     "typescript": "^5.9.3"
   }
